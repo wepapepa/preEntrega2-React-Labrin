@@ -8,8 +8,22 @@ const products = [
         stock: 25, 
         description:'Descripcion de Zapatillas Air Max 90'
     },
-    { id: '2', name: 'Air Jordan 1 Mid SE', price: 152.990, category: 'zapatillas', img:'https://nikeclprod.vtexassets.com/arquivos/ids/941624-1200-1200?v=638405216938800000&width=1200&height=1200&aspect=true', stock: 12, description:'Descripcion de Air Jordan 1 Mid SE'},
-    { id: '3', name: 'Nike Heritage Cangurera', price: 29.990, category: 'accesorios', img:'https://nikeclprod.vtexassets.com/arquivos/ids/915113-1200-1200?v=638382570730870000&width=1200&height=1200&aspect=true', stock: 2, description:'Descripcion de cangurera'}
+
+    { id: '2', 
+    name: 'Air Jordan 1 Mid SE', 
+    price: 152.990, 
+    category: 'zapatillas', 
+    img:'https://nikeclprod.vtexassets.com/arquivos/ids/941624-1200-1200?v=638405216938800000&width=1200&height=1200&aspect=true', 
+    stock: 12, 
+    description:'Descripcion de Air Jordan 1 Mid SE'},
+    
+    { id: '3', 
+    name: 'Nike Heritage Cangurera', 
+    price: 29.990, 
+    category: 'accesorios', 
+    img:'https://nikeclprod.vtexassets.com/arquivos/ids/915113-1200-1200?v=638382570730870000&width=1200&height=1200&aspect=true', 
+    stock: 2, 
+    description:'Descripcion de cangurera'}
 ]
 
 export const getProducts = () => {
