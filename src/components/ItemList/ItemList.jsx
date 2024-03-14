@@ -1,11 +1,12 @@
 import Item from "../Item/Item"
+import classes from './ItemList.module.css'
 
 const ItemList = ( { products }) => {
     return (
-        <div style={{ display: 'flex', flexDirection: column, backgroundColor: 'pink'}} onClick={() => console.log('hice click en itemlist')}>
+        <div className={classes.container}>
             {
                 products.map(product => {
-                    return <Item key={product.id} { ... product} />
+                    return <Item key={product.id} {...product} />
                 })
             }
         </div>

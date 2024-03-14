@@ -5,10 +5,10 @@ const ItemDetail = ({ id, name, category, img, price, stock, description}) => {
     return (
         <article>
             <header>
-                <h2>{name}</h2>
+                <h3>{name}</h3>
             </header>
             <picture>
-                <img src={img} alt={name} style={{ width: 100}}/>
+                <img src={img} alt={id} style={{ width: 100}}/>
             </picture>
             <section>
                 <p>Categoria: {category}</p>
