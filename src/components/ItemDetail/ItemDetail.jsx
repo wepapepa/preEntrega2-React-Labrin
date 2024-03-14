@@ -1,27 +1,27 @@
-import { useState } from "react"
-import Item from "../Item/Item"
-import ItemCount from "../ItemCount/ItemCount"
+import ItemCount from '../ItemCount/ItemCount'
 
-const ItemDetail = ({ name, category, price, img, description, stock }) => {
-
-    const handleOnAdd = (quantity) => {
-        console.log('cantidad del producto: ' + quantity)
-        setQuantity(quantity)
-    }
+const ItemDetail = ({ id, name, category, img, price, stock, description}) => {
 
     return (
-        
-            <article>
-            <h4>{name}</h4>
-            <img src={img} style= {{ width: 100 }} />
-            <h4>categoria: {category}</h4>
-            <h4>${price}</h4>
-            <h4>descripcion: {description}</h4>
-            {quantity === 0 ? <ItemCount stock={stock} onAdd={handleOnAdd} /> : <button>Finalizar compra</button>}
+        <article>
+            <header>
+                <h2>{name}</h2>
+            </header>
+            <picture>
+                <img src={img} alt={name} style={{ width: 100}}/>
+            </picture>
+            <section>
+                <p>Categoria: {category}</p>
+                <p>Descripción: {description}</p>
+                <p>Precio: {price}</p>
+                <p>Disponible: {stock}</p>
+            </section>           
+            <footer>
+               <ItemCount />
+            </footer>
         </article>
-        
-
     )
 }
+
 
 export default ItemDetail

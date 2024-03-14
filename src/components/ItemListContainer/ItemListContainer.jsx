@@ -33,10 +33,10 @@ const ItemListContainer = ({ greeting }) => {
 
 
     return (
-        <main>
+        <div style={{ background: 'blue'}}>
             <h1>{ greeting }</h1>
             <ItemList products={products} />
-        </main>
+        </div>
     )
 
 
