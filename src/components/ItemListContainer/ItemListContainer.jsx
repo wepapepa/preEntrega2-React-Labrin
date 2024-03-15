@@ -33,7 +33,7 @@ const ItemListContainer = ({ greeting }) => {
 
 
     return (
-        <div style={{ background: 'blue'}}>
+        <div style={{ background: 'pink'}}>
             <h1>{ greeting }</h1>
             <ItemList products={products} />
         </div>
