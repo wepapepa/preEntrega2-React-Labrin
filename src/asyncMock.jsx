@@ -29,7 +29,7 @@ const products = [
     name: 'Nike Jordan Sweatshirt', 
     price: 60.990, 
     category: 'polerones', 
-    img:'', 
+    img:'https://nikeclprod.vtexassets.com/arquivos/ids/820669-1200-1200?v=638309941234100000&width=1200&height=1200&aspect=true', 
     stock: 30, 
     description:'Descripcion de Poleron Jordan'}
 ]

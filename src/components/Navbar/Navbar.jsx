@@ -9,7 +9,7 @@ const Navbar = () => {
     return (
         <header className={classes.header}>
             <h2 onClick={() => navigate('/')} style={{ color: 'red', fontSize: 10, cursor: 'pointer'}}>Nike Chile</h2> 
-            <img src="./logo.png" style={{ width: 100 , height: 20 , }}/>
+            <img src="https://nikeclprod.vtexassets.com/assets/vtex/assets-builder/nikeclprod.store/3.0.1/icons/Assets_for_off%20platform/swoosh___33f7ffaf2fc124733c2c4a60a12a1160.svg" style={{ width: 100 , height: 20 , }}/>
             <nav>
                 <Link to='/category/zapatillas' className='btn btn-primary'>Zapatillas</Link>
                 <Link to='/category/accesorios'  className='btn btn-secondary'>Accesorios</Link>
