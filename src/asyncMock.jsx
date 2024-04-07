@@ -23,7 +23,15 @@ const products = [
     category: 'accesorios', 
     img:'https://nikeclprod.vtexassets.com/arquivos/ids/915113-1200-1200?v=638382570730870000&width=1200&height=1200&aspect=true', 
     stock: 2, 
-    description:'Descripcion de cangurera'}
+    description:'Descripcion de cangurera'},
+
+    { id: '4', 
+    name: 'Nike Jordan Sweatshirt', 
+    price: 60.990, 
+    category: 'polerones', 
+    img:'https://nikeclprod.vtexassets.com/arquivos/ids/820669-1200-1200?v=638309941234100000&width=1200&height=1200&aspect=true', 
+    stock: 30, 
+    description:'Descripcion de Poleron Jordan'}
 ]
 
 export const getProducts = () => {
