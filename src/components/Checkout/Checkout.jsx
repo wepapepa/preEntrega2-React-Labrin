@@ -49,6 +49,12 @@ const Checkout = () => {
             console.error('Lo sentimos, hay productos que no tienen stock disponible')
         }
 
+        if (mail = !mailConfirm) {
+            alert('Verifica que tu mail coincida en ambos campos')
+        } else {
+            disabled(botonCompra)
+        }
+
 
 
     }
@@ -56,8 +62,18 @@ const Checkout = () => {
         <div>
             <h1>Checkout</h1>
             <h3>Formulario de compra</h3>
+            <form action="/db" method="post">
+                <label for="username">Username</label>
+                <input type="text" id="buyer"></input>
+
+                <label for="mail">Email</label>
+                <input type="text" id="mail"></input>
+
+                <label for="mail">Confirma tu email</label>
+                <input type="text" id="mailConfirm"></input>
+            </form>
             
-            <button onClick={createOrder}> Generar orden de compras </button>
+            <button className="botonCompra" onClick={createOrder}> Generar orden de compras </button>
         </div>
     )
 }
