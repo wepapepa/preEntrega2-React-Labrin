@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, memo } from "react"
 
 import ItemList from "../ItemList/ItemList"
 import { useParams } from "react-router-dom"
@@ -6,20 +6,25 @@ import { useParams } from "react-router-dom"
 import { QuerySnapshot, getDocs } from 'firebase/firestore'
 import { db } from "../../services/firebase/firebaseConfig"
 
+const ItemListMemoized = memo(ItemList)
+
 const ItemListContainer = ({ greeting }) => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(true)
 
     const { categoryId } = useParams()
 
+    // const { showNotification } = useNotification()
+
     useEffect(() => {
+        setLoading(true)
 
         const productsCollection = collection(db, 'products')
 
         getDocs(productsCollection)
             .then(QuerySnapshot => {
-                console.log(querySnapshot)
-                const productsAdapted = querySnapshots.docs.map(doc => {
+                console.log(QuerySnapshot)
+                const productsAdapted = QuerySnapshot.docs.map(doc => {
                     const data = doc.data()
 
                     return { id: doc.id, ...data }
@@ -27,10 +32,12 @@ const ItemListContainer = ({ greeting }) => {
 
                 setProducts(productsAdapted)
             })
-            .catch()
+            .catch(error => {
+                alert('error', 'Hubo un error cargando los productos, intentelo mas tarde')
+            })
 
 
-        setLoading(true)
+        }, [categoryId])
 
         // const asyncFunction = categoryId ? getProductsByCategory : getProducts
         
@@ -44,7 +51,7 @@ const ItemListContainer = ({ greeting }) => {
         //     .finally(() => {
         //         setLoading(false)
         //     })
-    }, [categoryId]) //EL ARRAY DEBE ESTAR SIEMPRE! si no está esa necesidad de array de dependencias no tendria ningun sentido el use effect
+ //EL ARRAY DEBE ESTAR SIEMPRE! si no está esa necesidad de array de dependencias no tendria ningun sentido el use effect
 
 
     if(loading) {
