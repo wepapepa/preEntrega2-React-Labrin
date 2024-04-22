@@ -1,16 +1,21 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { CartContext } from "../../context/CartContext"
-import { collection, query, where, documentId } from "firebase/firestore"
+import { collection, query, where, documentId, writeBatch, addDoc, Timestamp, getDocs } from "firebase/firestore"
 import { db } from "../../services/firebase/firebaseConfig"
 
 const Checkout = () => {
-    const { cart, total } = useContext(CartContext)
+    const [loading, setLoading] = useState(false)
+    const [orderId, setOrderId] = useState(null)
+    const { cart, total, clearCart } = useContext(CartContext)
 
     const createOrder = async (userData) => {
+        
+
         const objOrder = {
             buyer: userData,
             items: cart,
-            total
+            total,
+            date: Timestamp.fromDate(new Date())
         }
 
         const batch = writeBatch(db)
@@ -44,6 +49,9 @@ const Checkout = () => {
 
             const orderCollection = collection(db, 'orders')
             const { id } = await addDoc(orderCollection, objOrder)
+
+            clearCart()
+            setOrderId(id)
             console.log(id)
         } else {
             console.error('Lo sentimos, hay productos que no tienen stock disponible')
@@ -54,10 +62,16 @@ const Checkout = () => {
         } else {
             disabled(botonCompra)
         }
-
-
-
     }
+
+    if(loading) {
+        return <h1>Su orden está siendo generada...</h1>
+    }
+
+    if(orderId) {
+        return <h1>El id de su orden es: {orderId}</h1>
+    }
+
     return (
         <div>
             <h1>Checkout</h1>

@@ -1,8 +1,9 @@
 import { useContext } from "react"
-import {CartContext } from "../../context/CartContext"
+import { CartContext } from "../../context/CartContext"
+import { Link } from "react-router-dom"
 
 const CartView = () => {
-    const { cart } = useContext(CartContext)
+    const { cart, removeItem } = useContext(CartContext)
 
 
     return (
@@ -10,17 +11,17 @@ const CartView = () => {
             <h1>Cart</h1>
             <section>
             {
-                Cart.map(prod => {
+                cart.map(prod => {
                     return (
-                        <article key={prod.id}>
+                        <article key={prod.id} style={{ display: 'flex'}}>
                             <h4>{prod.name}</h4>
+                            <button onClick={() => removeItem(prod.id)}>Eliminar</button>
                         </article>
                     )
                 })
             }
             </section>
             <Link to='/checkout'>Checkout</Link>
-
         </div>
     )
 }
