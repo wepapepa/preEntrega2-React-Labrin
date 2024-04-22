@@ -19,7 +19,7 @@ export const NotificationProvider = ({ children }) => {
 
     return (
         <NotificationContext.Provider value={{ showNotification }}>
-            { notificacionData.text && <Notification notificacionData={notificacionData} /> }
+            { notificationData.text && <Notification notificationData={notificationData} /> }
             { children }
         </NotificationContext.Provider>
     )
