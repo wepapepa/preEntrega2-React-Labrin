@@ -1,43 +1,22 @@
-import { useState, useEffect, memo } from "react"
-
+import { memo } from "react"
 import ItemList from "../ItemList/ItemList"
 import { useParams } from "react-router-dom"
+import { getProducts } from "../../services/firebase/firestore/products"
+import { useAsync } from "../../hooks/useAsync"
 
-import { QuerySnapshot, getDocs } from 'firebase/firestore'
-import { db } from "../../services/firebase/firebaseConfig"
 
 const ItemListMemoized = memo(ItemList)
 
 const ItemListContainer = ({ greeting }) => {
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState(true)
 
     const { categoryId } = useParams()
 
     // const { showNotification } = useNotification()
+    const asyncFunction = () => getProducts(categoryId)
 
-    useEffect(() => {
-        setLoading(true)
-
-        const productsCollection = collection(db, 'products')
-
-        getDocs(productsCollection)
-            .then(QuerySnapshot => {
-                console.log(QuerySnapshot)
-                const productsAdapted = QuerySnapshot.docs.map(doc => {
-                    const data = doc.data()
-
-                    return { id: doc.id, ...data }
-                })
-
-                setProducts(productsAdapted)
-            })
-            .catch(error => {
-                alert('error', 'Hubo un error cargando los productos, intentelo mas tarde')
-            })
+    const { data: products, loading, error } = useAsync(asyncFunction, [categoryId])
 
 
-        }, [categoryId])
 
         // const asyncFunction = categoryId ? getProductsByCategory : getProducts
         
@@ -58,11 +37,15 @@ const ItemListContainer = ({ greeting }) => {
         return <h1>Cargando listado de productos...</h1>
     }
 
+    if(error) {
+        return <h1>Hubo un error cargando los productos, inténtelo más tarde</h1>
+    }
+
 
     return (
-        <div style={{ background: 'pink'}}>
+        <div style={{ background: 'pink'}} onClick={() => console.log('hice click en itemlistcontainer')}>
             <h1>{ greeting }</h1>
-            <ItemList products={products} />
+            <ItemListMemoized products={products} />
         </div>
     )
 

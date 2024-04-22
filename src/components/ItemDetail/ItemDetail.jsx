@@ -1,28 +1,78 @@
 import ItemCount from '../ItemCount/ItemCount'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 
 import { CartContext } from '../../context/CartContext'
-import { useContext } from 'react'
+import { useNotification } from '../../notification/hooks/useNotification'
+
+const InputCount = ({ onAdd, stock, initial= 1 }) => {
+    const [count, setCount] = useState(initial)
+
+
+    const handleChange = (e) => {
+        if(e.target.value <= stock) {
+            setCount(e.target.value)
+        }
+    }
+
+    return (
+        <div>
+            <input type='number' onChange={handleChange} value={count} />
+            <button onClick={() => onAdd(count)}>Agregar al carrito</button>
+        </div>
+    )
+}
+
+const ButtonCount = ({ onAdd, stock, initial = 1 }) => {
+    const [count, setCount] = useState(initial)
+
+    const increment = () => {
+        if (count < stock) {
+            setCount(count + 1)
+        }
+    }
+
+    const decrement = () => {
+        setCount(count - 1)
+    }
+
+    return (
+        <div>
+            <p>{count}</p>
+            <button onClick={decrement}>-</button>
+            <button onCLick={increment}>+</button>
+            <button onClick={() => onAdd(count)}>Agregar al carrito</button>
+        </div>
+    )
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 const ItemDetail = ({ id, name, category, img, price, stock, description }) => {
 
-    const [quantityAdded, setQuantityAdded] = useState(0)
+    const [inputType, setInputType] = useState('button')
 
-    const { addItem } = useContext(CartContext)
+    const ItemCount = inputType === 'input' ? InputCount : ButtonCount
+
+    const { showNotification } = useNotification()
+
+    const { addItem, isInCart } = useContext(CartContext)
 
     const handleOnAdd = (quantity) => {
-        setQuantityAdded(quantity)
 
-        const item = { //ARMÉ EL OBJETO CON DATOS BASE
-            id, name, price
+        const objProductToAdd = { //ARMÉ EL OBJETO CON DATOS BASE
+            id, name, price, quantity
         }
+        console.log(objProductToAdd)
+        showNotification('success', `Seagregó correctamente ${quantity} ${name}`)
         
-        addItem(item, quantity) //Info entregada al addItem con las cantidades
+        addItem(objProductToAdd) //Info entregada al addItem con las cantidades
     }
 
     return (
         <article>
+            <button onClick={() => setInputType(inputType === 'input' ? 'button' : 'input')}>Cambiar contador</button>
             <header>
                 <h3>{name}</h3>
             </header>
@@ -39,9 +89,11 @@ const ItemDetail = ({ id, name, category, img, price, stock, description }) => {
                
                { 
                     quantityAdded > 0 ? (
-                        <Link to='/cart' className='Option'>Terminar compra</Link>
+                        <>
+                            <Link to={`/cart`}>Terminar compra</Link>
+                        </>
                     ) : (
-                        <ItemCount initial={1} stock={stock} onAdd={handleOnAdd}/>
+                        <ItemCount stock={stock} onAdd={handleOnAdd}/>
                     )
                }
             </footer>
